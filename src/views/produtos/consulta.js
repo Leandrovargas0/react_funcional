@@ -6,14 +6,14 @@ class ConsultaProdutos extends React.Component {
         produtos: []
     }
 
-    constructor(){
+    constructor() {
         super();
         this.service = new ProdutoService();
     }
 
     componentDidMount() {
         const produtos = this.service.obterProdutos();
-        this.setState({produtos : produtos })
+        this.setState({ produtos: produtos })
     }
 
 
@@ -35,14 +35,13 @@ class ConsultaProdutos extends React.Component {
                         </thead>
                         <tbody>
                             {
-                                this.state.produtos.map(produto => {
+                                this.state.produtos.map((produto, index) => {
                                     return (
-                                        <tr>
+                                        <tr key={index}>
                                             <td>{produto.nome}</td>
                                             <td>{produto.sku}</td>
                                             <td>{produto.fornecedor}</td>
                                             <td>{produto.preco}</td>
-                                            <td></td>
                                         </tr>
                                     )
                                 })
