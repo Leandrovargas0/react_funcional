@@ -1,57 +1,47 @@
-import React from 'react';
-import ProdutoService from "../../app/produtoservice";
+import React from 'react'
 
-class ConsultaProdutos extends React.Component {
+import Card from '../../components/card'
+import ProdutosTable from './produtosTable'
+
+import ProdutoService from '../../app/produtoService'
+import { withRouter } from 'react-router-dom'
+
+class ConsultaProdutos extends React.Component{
+
     state = {
-        produtos: []
+        produtos : []
     }
 
-    constructor() {
-        super();
+    constructor(){
+        super()
         this.service = new ProdutoService();
     }
 
-    componentDidMount() {
+    componentDidMount(){
         const produtos = this.service.obterProdutos();
-        this.setState({ produtos: produtos })
+        this.setState({ produtos })
     }
 
+    preparaEditar = (sku) => {
+        console.log('sku para editar: ' ,sku)
+        this.props.history.push(`/cadastro-produtos/${sku}`)
+    }
 
-    render() {
+    deletar = (sku) => {
+        const produtos = this.service.deletar(sku)
+        this.setState({produtos})
+    }
+
+    render(){
         return (
-            <div className="card">
-                <div className="card-header">
-                    Consulta de produto:
-                </div>
-                <div className="card-body">
-                    <table className="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>Sku</th>
-                                <th>Fornecedor</th>
-                                <th>Preço</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                this.state.produtos.map((produto, index) => {
-                                    return (
-                                        <tr key={index}>
-                                            <td>{produto.nome}</td>
-                                            <td>{produto.sku}</td>
-                                            <td>{produto.fornecedor}</td>
-                                            <td>{produto.preco}</td>
-                                        </tr>
-                                    )
-                                })
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <Card header="Consulta Produtos">    
+                <ProdutosTable produtos={this.state.produtos} 
+                              editarAction={this.preparaEditar}
+                              deletarAction={this.deletar} />              
+                
+            </Card>
         )
     }
 }
 
-export default ConsultaProdutos;
+export default withRouter(ConsultaProdutos)
