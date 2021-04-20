@@ -53,7 +53,7 @@ export default class ProdutoService {
         const index = this.obterIndex(sku)
         if(index !== null){
             const produtos = this.obterProdutos()
-            //splice removo o item no array
+            //splice remove o item no array
             produtos.splice(index, 1)
             localStorage.setItem(PRODUTOS, JSON.stringify(produtos)  )
             return produtos

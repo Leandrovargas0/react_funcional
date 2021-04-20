@@ -69,6 +69,9 @@ class CadastroProduto extends React.Component {
     }
 
     render(){
+        //header{} -> vira {props.header} dentro do componente card
+        //<form>...</form> -> vira {props.children } dentro do componente card
+
         return(
             <Card header={this.state.atualizando ? 'Atualização de Produto' : 'Cadastro de Produto'} >
                 <form id="frmProduto" onSubmit={this.onSubmit} >
